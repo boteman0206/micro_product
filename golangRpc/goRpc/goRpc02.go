@@ -10,7 +10,7 @@ import (
 /**
 对上一个版本的优化
 */
-//const HelloServiceName = "path/to/pkg.HelloService" 放到proto里面
+//const HelloServiceName = "path/to/pkg.HelloService" // 放到proto里面
 
 type HelloServiceInterface interface {
 	Hello(request string, reply *string) error

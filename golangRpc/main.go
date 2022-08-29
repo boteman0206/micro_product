@@ -10,6 +10,9 @@ func main() {
 	// 注册hello的rpc方法
 	//goRpc.RegisterHello()
 
-	goRpc.RegisterHello02()
+	//goRpc.RegisterHello02()
+
+	// 最终
+	goRpc.RegisterHello03()
 
 }
