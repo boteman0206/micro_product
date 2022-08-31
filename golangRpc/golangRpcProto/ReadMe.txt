@@ -1,7 +1,7 @@
 
 
 
-使用golang+proto的测试文件，对原始golang知道的rpc的升级
+使用golang+proto的测试文件，对原始golang知道的rpc的升级 以及gRPC 流的使用
 
 安装工具protobuf
 首先是安装官方的 protoc 工具，可以从 https://github.com/google/protobuf/releases 下载。
