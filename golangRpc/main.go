@@ -13,6 +13,9 @@ func main() {
 	//goRpc.RegisterHello02()
 
 	// 最终
-	goRpc.RegisterHello03()
+	//goRpc.RegisterHello03()
+
+	//使用jsonrpc传输
+	goRpc.RegisterHello04()
 
 }
