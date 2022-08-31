@@ -1,6 +1,7 @@
 package goRpc
 
 import (
+	"fmt"
 	"log"
 	"micro_product/micro_proto"
 	"net"
@@ -22,6 +23,7 @@ type HelloServiceJson struct{}
 
 func (p *HelloServiceJson) Hello(request string, reply *string) error {
 	*reply = request
+	fmt.Println("RegisterHello04: ", request)
 	return nil
 }
 
