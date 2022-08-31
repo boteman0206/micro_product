@@ -16,9 +16,9 @@ func main() {
 	//golangRpc.RegisterHello03()
 
 	//使用jsonrpc传输
-	//golangRpc.RegisterHello04()
+	golangRpc.RegisterHello04()
 
-	golangRpc.RegisterHello05()
+	//golangRpc.RegisterHello05()
 
 	// 使用http的方式调用
 	//golangRpc.RegisterHello06()
