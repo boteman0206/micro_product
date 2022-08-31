@@ -1,26 +1,26 @@
 package main
 
 import (
-	"micro_product/golangRpc/goRpc"
+	"micro_product/golangRpc/golangRpc"
 	_ "net/http/pprof"
 )
 
 func main() {
 
 	// 注册hello的rpc方法
-	//goRpc.RegisterHello()
+	//golangRpc.RegisterHello()
 
-	//goRpc.RegisterHello02()
+	//golangRpc.RegisterHello02()
 
 	// 最终
-	//goRpc.RegisterHello03()
+	//golangRpc.RegisterHello03()
 
 	//使用jsonrpc传输
-	//goRpc.RegisterHello04()
+	//golangRpc.RegisterHello04()
 
-	goRpc.RegisterHello05()
+	golangRpc.RegisterHello05()
 
 	// 使用http的方式调用
-	//goRpc.RegisterHello06()
+	//golangRpc.RegisterHello06()
 
 }

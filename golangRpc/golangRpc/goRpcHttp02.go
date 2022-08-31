@@ -1,4 +1,4 @@
-package goRpc
+package golangRpc
 
 import (
 	"log"
@@ -21,7 +21,7 @@ func (t *Arith) Multiply(args *Args, reply *int) error {
 }
 
 /**
-RegisterHello05版本没有效果，换成这种方式
+RegisterHello05版本没有效果，换成这种方式 架设在http协议上
 */
 func RegisterHello06() {
 	arith := new(Arith)
