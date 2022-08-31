@@ -26,6 +26,10 @@ func main() {
 
 	//=====================================rpc+proto服务端=================================
 
-	golangRpcProto.RegisterHello07()
+	//普通的proto调用
+	//golangRpcProto.RegisterHello07()
+
+	//proto的流服务端
+	golangRpcProto.RegisterHello08()
 
 }

@@ -1,8 +1,13 @@
 package golangRpcProto
 
 import (
+	"fmt"
+	"google.golang.org/grpc"
 	"io"
+	"log"
 	"micro_product/micro_proto/pc"
+	"net"
+	"time"
 )
 
 /**
@@ -17,6 +22,7 @@ func (p *HelloServiceImpl) Channel(stream pc.HelloService_ChannelServer) error {
 
 	for {
 		args, err := stream.Recv()
+		fmt.Println("stream: Recv ", args, err)
 		if err != nil {
 			if err == io.EOF {
 				return nil
@@ -24,12 +30,26 @@ func (p *HelloServiceImpl) Channel(stream pc.HelloService_ChannelServer) error {
 			return err
 		}
 
-		reply := &pc.StringDto{Value: "hello:" + args.GetValue()}
-
+		format := time.Now().Format("2006-01-02 15:04:05")
+		reply := &pc.StringDto{Value: "hello:" + args.GetValue() + " time: " + format}
+		fmt.Println("stream reply: ", reply)
 		err = stream.Send(reply)
 		if err != nil {
 			return err
 		}
 	}
+
+}
+
+func RegisterHello08() {
+	grpcServer := grpc.NewServer()
+	pc.RegisterHelloServiceServer(grpcServer, new(HelloServiceImpl))
+
+	lis, err := net.Listen("tcp", ":1234")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	grpcServer.Serve(lis)
 
 }
