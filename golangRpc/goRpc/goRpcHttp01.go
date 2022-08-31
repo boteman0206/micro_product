@@ -24,8 +24,7 @@ Go 语言内在的 RPC 框架已经支持在 Http 协议上提供 RPC 服务。�
 type HelloServiceJsonHttp struct{}
 
 func (p *HelloServiceJsonHttp) Hello(request string, reply *string) error {
-	*reply = request
-	fmt.Println("RegisterHello05: ", reply)
+	*reply = "hello:" + request
 	return nil
 }
 
@@ -64,10 +63,11 @@ func RegisterHello05() {
 			fmt.Println("rpc.ServeRequest(jsonrpc.NewServerCodec(conn)) error: ", err.Error())
 			return
 		}
-		fmt.Fprintf(conn, "json http response")
+
 	})
 
-	http.HandleFunc("/hello", hello)
+	//rpc.HandleHTTP()
+	//http.HandleFunc("/hello", hello)
 
-	http.ListenAndServe(":1234", nil)
+	http.ListenAndServe("127.0.0.1:1234", nil)
 }

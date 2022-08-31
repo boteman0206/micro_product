@@ -20,4 +20,7 @@ func main() {
 
 	goRpc.RegisterHello05()
 
+	// 使用http的方式调用
+	//goRpc.RegisterHello06()
+
 }
