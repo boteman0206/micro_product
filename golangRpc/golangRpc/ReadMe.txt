@@ -1,5 +1,0 @@
-
-使用golang自带的rpc框架的rpc服务端（调用端在micro_api项目中）
-包含了普通的rpc和jsonrpc的基本使用
-
-其中http的rpc还没有调通
