@@ -4,15 +4,15 @@ import (
 	"context"
 	"google.golang.org/grpc"
 	"log"
-	"micro_product/micro_proto/pc"
+	"micro_product/micro_proto/hello"
 	"net"
 )
 
 type HelloServiceImpl struct{}
 
-func (p *HelloServiceImpl) Hello(ctx context.Context, args *pc.StringDto) (*pc.StringDto, error) {
+func (p *HelloServiceImpl) Hello(ctx context.Context, args *hello.StringDto) (*hello.StringDto, error) {
 
-	reply := &pc.StringDto{Value: "hello:" + args.GetValue()}
+	reply := &hello.StringDto{Value: "hello:" + args.GetValue()}
 	return reply, nil
 
 }
@@ -25,7 +25,7 @@ func (p *HelloServiceImpl) Hello(ctx context.Context, args *pc.StringDto) (*pc.S
 */
 func RegisterHello07() {
 	grpcServer := grpc.NewServer()
-	pc.RegisterHelloServiceServer(grpcServer, new(HelloServiceImpl))
+	hello.RegisterHelloServiceServer(grpcServer, new(HelloServiceImpl))
 
 	lis, err := net.Listen("tcp", ":1234")
 

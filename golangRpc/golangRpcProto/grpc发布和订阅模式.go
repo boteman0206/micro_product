@@ -14,7 +14,7 @@ import (
 	"github.com/moby/moby/pkg/pubsub"
 	"google.golang.org/grpc"
 	"log"
-	"micro_product/micro_proto/pc"
+	"micro_product/micro_proto/hello"
 	"net"
 	"strings"
 	"time"
@@ -31,15 +31,15 @@ func NewPubsubService() *PubsubService {
 }
 
 //然后是实现发布方法和订阅方法：
-func (p *PubsubService) Publish(ctx context.Context, arg *pc.StringDto) (*pc.StringDto, error) {
+func (p *PubsubService) Publish(ctx context.Context, arg *hello.StringDto) (*hello.StringDto, error) {
 	fmt.Println("Publish: ", arg.GetValue())
 	p.pub.Publish(arg.GetValue())
 
-	return &pc.StringDto{}, nil
+	return &hello.StringDto{}, nil
 }
 
 //然后是实现发布方法和订阅方法：
-func (p *PubsubService) Subscribe(arg *pc.StringDto, stream pc.PubsubService_SubscribeServer) error {
+func (p *PubsubService) Subscribe(arg *hello.StringDto, stream hello.PubsubService_SubscribeServer) error {
 	fmt.Println("Subscribe: ", arg.GetValue())
 	ch := p.pub.SubscribeTopic(func(v interface{}) bool {
 		if key, ok := v.(string); ok {
@@ -53,7 +53,7 @@ func (p *PubsubService) Subscribe(arg *pc.StringDto, stream pc.PubsubService_Sub
 
 	// 遍历服务器的chan，并将其中的信息发送给订阅客户端
 	for v := range ch {
-		if err := stream.Send(&pc.StringDto{Value: v.(string)}); err != nil {
+		if err := stream.Send(&hello.StringDto{Value: v.(string)}); err != nil {
 			return err
 		}
 	}
@@ -68,7 +68,7 @@ func RegisterHello10() {
 
 	service := NewPubsubService()
 	grpcServer := grpc.NewServer()
-	pc.RegisterPubsubServiceServer(grpcServer, service)
+	hello.RegisterPubsubServiceServer(grpcServer, service)
 
 	lis, err := net.Listen("tcp", ":1234")
 
