@@ -56,4 +56,11 @@ $ openssl req -new -subj "/C=GB/L=China/O=server/CN=server.io" -key server.key  
 $ openssl x509 -req -sha256  -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 -in server.csr   -out server.crt
 签名的过程中引入了一个新的以. csr 为后缀名的文件，它表示证书签名请求文件。在证书签名完成之后可以删除. csr 文件。
 然后在客户端就可以基于 CA 证书对服务器进行证书验证：
--- 使用例子在 goRpcAdvance02文件中
+-- 使用例子在 goRpcAdvance02文件中 这个还没有跑通，待后续验证
+
+
+
+
+-- Token 认证
+前面讲述的基于证书的认证是针对每个 gRPC 连接的认证。gRPC 还为每个 gRPC 方法调用提供了认证支持，这样就基于用户 Token 对不同的方法访问进行权限管理。
+

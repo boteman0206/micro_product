@@ -43,6 +43,8 @@ func main() {
 	//=================================grpc的高级使用=========================================================
 
 	// grpc使用tls证书
-	goRpcAdvance.RegisterHello11()
+	//goRpcAdvance.RegisterHello11()
+
+	goRpcAdvance.RegisterHello12()
 
 }
