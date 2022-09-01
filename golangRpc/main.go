@@ -35,7 +35,9 @@ func main() {
 	//protod的单向流服务
 	//golangRpcProto.RegisterHello09()
 
-	// 发布订阅的例子
+	// 发布订阅的例子，这是一体的,并没有提供grpc服务
+	//golangRpcProto.DockerPublishSubscribeExample()
+	// 发布订阅的服务端测试
 	golangRpcProto.RegisterHello10()
 
 }

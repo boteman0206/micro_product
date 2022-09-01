@@ -12,7 +12,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/moby/moby/pkg/pubsub"
+	"google.golang.org/grpc"
+	"log"
 	"micro_product/micro_proto/pc"
+	"net"
 	"strings"
 	"time"
 )
@@ -29,7 +32,7 @@ func NewPubsubService() *PubsubService {
 
 //然后是实现发布方法和订阅方法：
 func (p *PubsubService) Publish(ctx context.Context, arg *pc.StringDto) (*pc.StringDto, error) {
-
+	fmt.Println("Publish: ", arg.GetValue())
 	p.pub.Publish(arg.GetValue())
 
 	return &pc.StringDto{}, nil
@@ -37,8 +40,10 @@ func (p *PubsubService) Publish(ctx context.Context, arg *pc.StringDto) (*pc.Str
 
 //然后是实现发布方法和订阅方法：
 func (p *PubsubService) Subscribe(arg *pc.StringDto, stream pc.PubsubService_SubscribeServer) error {
+	fmt.Println("Subscribe: ", arg.GetValue())
 	ch := p.pub.SubscribeTopic(func(v interface{}) bool {
 		if key, ok := v.(string); ok {
+			// 接收数据是string，并且key是以arg为前缀
 			if strings.HasPrefix(key, arg.GetValue()) {
 				return true
 			}
@@ -46,6 +51,7 @@ func (p *PubsubService) Subscribe(arg *pc.StringDto, stream pc.PubsubService_Sub
 		return false
 	})
 
+	// 遍历服务器的chan，并将其中的信息发送给订阅客户端
 	for v := range ch {
 		if err := stream.Send(&pc.StringDto{Value: v.(string)}); err != nil {
 			return err
@@ -56,9 +62,28 @@ func (p *PubsubService) Subscribe(arg *pc.StringDto, stream pc.PubsubService_Sub
 }
 
 /**
-这个是docker项目的一个例子： 发布订阅是一个常见的设计模式，开源社区中已经存在很多该模式的实现。其中 docker 项目中提供了一个 pubsub 的极简实现，下面是基于 pubsub 包实现的本地发布订阅代码：
+发布订阅的服务端
 */
 func RegisterHello10() {
+
+	service := NewPubsubService()
+	grpcServer := grpc.NewServer()
+	pc.RegisterPubsubServiceServer(grpcServer, service)
+
+	lis, err := net.Listen("tcp", ":1234")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	grpcServer.Serve(lis)
+
+}
+
+/**
+这个是docker项目的一个例子： 发布订阅是一个常见的设计模式，开源社区中已经存在很多该模式的实现。其中 docker 项目中提供了一个 pubsub 的极简实现，下面是基于 pubsub 包实现的本地发布订阅代码：
+*/
+func DockerPublishSubscribeExample() {
 
 	//其中 pubsub.NewPublisher 构造一个发布对象
 	p := pubsub.NewPublisher(100*time.Millisecond, 10)
@@ -93,5 +118,8 @@ func RegisterHello10() {
 		fmt.Println("docker topic:", <-docker)
 	}()
 
-	<-make(chan bool)
+	// 阻塞
+	for true {
+
+	}
 }
