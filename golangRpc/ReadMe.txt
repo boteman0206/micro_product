@@ -1,6 +1,6 @@
 
 
-// golangRpc模块： 测试golang自带的rpc测试
+//  golangRpc模块： 测试golang自带的rpc测试
 使用golang自带的rpc框架的rpc服务端（调用端在micro_api项目中）
 包含了普通的rpc和jsonrpc的基本使用
 
@@ -25,3 +25,19 @@ $ protoc --go_out=. hello.proto   注意：这样只会生成message相关的pb�
 生成grpc文件 使用 protoc-gen-go 内置的 gRPC 插件生成 gRPC 代码： gRPC 插件会为服务端和客户端生成不同的接口：
 $ protoc --go_out=plugins=grpc:. hello.proto
 
+
+
+
+// goRpcAdvance模块：主要展示的是证书的使用和一些protobuf的扩展
+证书认证： gRPC 建立在 HTTP/2 协议之上，对 TLS 提供了很好的支持。 我们前面章节中 gRPC 的服务都没有提供证书支持，因此客户端在连接服务器中通过 grpc.WithInsecure()
+
+
+linux生成证书的命令
+$ openssl genrsa -out server.key 2048
+$ openssl req -new -x509 -days 3650 -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io"  -key server.key -out server.crt
+
+$ openssl genrsa -out client.key 2048
+$ openssl req -new -x509 -days 3650     -subj "/C=GB/L=China/O=grpc-client/CN=client.grpc.io"  -key client.key -out client.crt
+以上命令将生成 server.key、server.crt、client.key 和 client.crt 四个文件。
+其中以. key 为后缀名的是私钥文件，需要妥善保管。以. crt 为后缀名是证书文件，也可以简单理解为公钥文件，并不需要秘密保存。
+在 subj 参数中的 /CN=server.grpc.io 表示服务器的名字为 server.grpc.io，在验证服务器的证书时需要用到该信息。

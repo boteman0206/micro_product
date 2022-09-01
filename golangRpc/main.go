@@ -1,7 +1,7 @@
 package main
 
 import (
-	"micro_product/golangRpc/golangRpcProto"
+	"micro_product/golangRpc/goRpcAdvance"
 	_ "net/http/pprof"
 )
 
@@ -38,6 +38,11 @@ func main() {
 	// 发布订阅的例子，这是一体的,并没有提供grpc服务
 	//golangRpcProto.DockerPublishSubscribeExample()
 	// 发布订阅的服务端测试
-	golangRpcProto.RegisterHello10()
+	//golangRpcProto.RegisterHello10()
+
+	//=================================grpc的高级使用=========================================================
+
+	// grpc使用tls证书
+	goRpcAdvance.RegisterHello11()
 
 }
