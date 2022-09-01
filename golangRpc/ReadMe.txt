@@ -32,6 +32,7 @@ $ protoc --go_out=plugins=grpc:. hello.proto
 证书认证： gRPC 建立在 HTTP/2 协议之上，对 TLS 提供了很好的支持。 我们前面章节中 gRPC 的服务都没有提供证书支持，因此客户端在连接服务器中通过 grpc.WithInsecure()
 
 
+-- 自签名证书的使用 + grpc
 linux生成证书的命令
 $ openssl genrsa -out server.key 2048
 $ openssl req -new -x509 -days 3650 -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io"  -key server.key -out server.crt
@@ -41,3 +42,18 @@ $ openssl req -new -x509 -days 3650     -subj "/C=GB/L=China/O=grpc-client/CN=cl
 以上命令将生成 server.key、server.crt、client.key 和 client.crt 四个文件。
 其中以. key 为后缀名的是私钥文件，需要妥善保管。以. crt 为后缀名是证书文件，也可以简单理解为公钥文件，并不需要秘密保存。
 在 subj 参数中的 /CN=server.grpc.io 表示服务器的名字为 server.grpc.io，在验证服务器的证书时需要用到该信息。
+--  使用例子在：goRpcAdvance01文件中
+
+
+
+-- 根证书的使用 + grpc
+为了避免证书的传递过程中被篡改，可以通过一个安全可靠的根证书分别对服务器和客户端的证书进行签名。这样客户端或服务器在收到对方的证书后可以通过根证书进行验证证书的有效性。
+根证书的生成方式和自签名证书的生成方式类似：
+$ openssl genrsa -out ca.key 2048
+$ openssl req -new -x509 -days 3650    -subj "/C=GB/L=China/O=gobook/CN=github.com"  -key ca.key -out ca.crt
+然后是重新对服务器端证书进行签名：
+$ openssl req -new -subj "/C=GB/L=China/O=server/CN=server.io" -key server.key  -out server.csr
+$ openssl x509 -req -sha256  -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 -in server.csr   -out server.crt
+签名的过程中引入了一个新的以. csr 为后缀名的文件，它表示证书签名请求文件。在证书签名完成之后可以删除. csr 文件。
+然后在客户端就可以基于 CA 证书对服务器进行证书验证：
+-- 使用例子在 goRpcAdvance02文件中
