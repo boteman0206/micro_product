@@ -33,6 +33,9 @@ func main() {
 	//golangRpcProto.RegisterHello08()
 
 	//protod的单向流服务
-	golangRpcProto.RegisterHello09()
+	//golangRpcProto.RegisterHello09()
+
+	// 发布订阅的例子
+	golangRpcProto.RegisterHello10()
 
 }
