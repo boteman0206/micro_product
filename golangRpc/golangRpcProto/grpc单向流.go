@@ -21,7 +21,7 @@ func (p *HelloServiceImpl) ChannelOneWay(stream pc.HelloService_ChannelOneWaySer
 		if err != nil {
 			return err
 		}
-		log.Println("客户端信息：", recv)
+		log.Println("客户端信息：", recv.Value)
 	}
 
 	// 服务端最后一条消息发送
