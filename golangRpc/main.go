@@ -52,6 +52,9 @@ func main() {
 	//goRpcAdvance.RegisterHello13()
 
 	// 多个grpc的拦截器使用
-	goRpcAdvance.RegisterHello14()
+	//goRpcAdvance.RegisterHello14()
+
+	// http和rpc服务共存
+	goRpcAdvance.RegisterHello15()
 
 }

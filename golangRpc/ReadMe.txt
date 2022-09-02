@@ -43,6 +43,8 @@ $ openssl req -new -x509 -days 3650     -subj "/C=GB/L=China/O=grpc-client/CN=cl
 其中以. key 为后缀名的是私钥文件，需要妥善保管。以. crt 为后缀名是证书文件，也可以简单理解为公钥文件，并不需要秘密保存。
 在 subj 参数中的 /CN=server.grpc.io 表示服务器的名字为 server.grpc.io，在验证服务器的证书时需要用到该信息。
 --  使用例子在：goRpcAdvance01文件中
+-- 这里有一个问题使用cn生成的文件可能会报错 transport: authentication handshake failed: x509: certificate relies on legacy Common Name field, use SANs instead
+原因：当前gRPC版本的主机名不依赖CN字段，而是要使用SAN 查找资料后发现是因为 go 1.15 版本开始废弃 CommonName，因此推荐使用 SAN 证书。 如果想兼容之前的方式，需要设置环境变量 GODEBUG 为 x509ignoreCN=0。
 
 
 
@@ -67,3 +69,7 @@ $ openssl x509 -req -sha256  -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650
 
 -- 截取器
 gRPC 中的 grpc.UnaryInterceptor 和 grpc.StreamInterceptor 分别对普通方法和流方法提供了截取器的支持。我们这里简单介绍普通方法的截取器用法。
+
+
+-- 和 Web 服务共存
+gRPC 构建在 HTTP/2 协议之上，因此我们可以将 gRPC 服务和普通的 Web 服务架设在同一个端口之上。对于没有启动 TLS 协议的服务则需要对 HTTP/2 特性做适当的调整：
