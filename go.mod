@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/golang/protobuf v1.5.2
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/moby/moby v20.10.17+incompatible
 	google.golang.org/grpc v1.49.0
 )

@@ -64,3 +64,6 @@ $ openssl x509 -req -sha256  -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650
 -- Token 认证
 前面讲述的基于证书的认证是针对每个 gRPC 连接的认证。gRPC 还为每个 gRPC 方法调用提供了认证支持，这样就基于用户 Token 对不同的方法访问进行权限管理。
 
+
+-- 截取器
+gRPC 中的 grpc.UnaryInterceptor 和 grpc.StreamInterceptor 分别对普通方法和流方法提供了截取器的支持。我们这里简单介绍普通方法的截取器用法。

@@ -45,6 +45,13 @@ func main() {
 	// grpc使用tls证书
 	//goRpcAdvance.RegisterHello11()
 
-	goRpcAdvance.RegisterHello12()
+	// grpc的token验证
+	//goRpcAdvance.RegisterHello12()
+
+	//grpc的拦截器的实现
+	//goRpcAdvance.RegisterHello13()
+
+	// 多个grpc的拦截器使用
+	goRpcAdvance.RegisterHello14()
 
 }
