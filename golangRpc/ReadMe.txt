@@ -73,3 +73,7 @@ gRPC 中的 grpc.UnaryInterceptor 和 grpc.StreamInterceptor 分别对普通方�
 
 -- 和 Web 服务共存
 gRPC 构建在 HTTP/2 协议之上，因此我们可以将 gRPC 服务和普通的 Web 服务架设在同一个端口之上。对于没有启动 TLS 协议的服务则需要对 HTTP/2 特性做适当的调整：
+
+-- rest接口 hello_rest文件(为使用)
+gRPC 服务一般用于集群内部通信，如果需要对外暴露服务一般会提供等价的 REST 接口。
+通过 REST 接口比较方便前端 JavaScript 和后端交互。开源社区中的 grpc-gateway 项目就实现了将 gRPC 服务转为 REST 服务的能力。
