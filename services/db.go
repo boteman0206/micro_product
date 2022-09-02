@@ -78,7 +78,6 @@ func NewDbConn(dataSourceName ...string) *xorm.Engine {
 		if err = engine.DB().Ping(); err == nil {
 			return engine
 		}
-		return engine
 	}
 
 	var mySqlStr string

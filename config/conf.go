@@ -34,8 +34,8 @@ func InitConfig() {
 		log.Fatal("Fail to load section 'server': ", err)
 	}
 	mServer := &models.Server{
-		HttpPort:  serverSection.Key("HTTP_PORT").MustInt(8080),
-		PprofPort: serverSection.Key("PPROF_PORT").MustInt(8081),
+		HttpPort:  serverSection.Key("HTTP_PORT").MustInt(8802),
+		PprofPort: serverSection.Key("PPROF_PORT").MustInt(11111),
 	}
 
 	ConfigRes.Ser = mServer
