@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"micro_product/config"
 	"time"
 
@@ -28,17 +29,23 @@ func CloseDB() {
 
 //获取redis集群客户端
 func GetRedisConn() *redis.Client {
-
-	// 后期加配置
-	var addr = "127.0.0.1:6379"
-	var pwd = "admin1234"
-	var db = 0
-
-	//根据环境变量启动定时任务
+	var addr, pwd string
+	var db int
+	if config.ConfigRes.Redis != nil {
+		// 后期加配置
+		redisini := config.ConfigRes.Redis
+		redisAddr := fmt.Sprintf("%s:%d", redisini.Addr, redisini.Port)
+		addr = redisAddr
+		pwd = redisini.Pwd
+		db = redisini.Db
+	} else {
+		addr = "127.0.0.1:6379"
+		pwd = "admin1234"
+		db = 0
+	}
 
 	if redisHandle != nil {
 		_, err := redisHandle.Ping().Result()
-
 		if err == nil {
 			return redisHandle
 		} else {
