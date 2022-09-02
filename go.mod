@@ -11,6 +11,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/labstack/echo/v4 v4.8.0
+	github.com/maybgit/pbgo v0.0.0-20200601050928-85c4ece4a248
 	github.com/moby/moby v20.10.17+incompatible
 	google.golang.org/grpc v1.49.0
 )
