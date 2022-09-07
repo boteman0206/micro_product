@@ -16,6 +16,10 @@
     （3）fair：按后端服务器响应时间进行分配，响应时间越短优先级别越高
     （4）url_hash：按照访问 URL 的 hash 结果值分配
 
+5： 配置本机的域名(一定注意不能使用127.0.0.1)
+一定使用ipconfig查看域名： 192.168.xx.xx api.blog.com
+
+
 5: 配置反向代理
 worker_processes  1;
 
