@@ -1,3 +1,6 @@
 [submodule "micro_proto"]
 	path = micro_proto
 	url = git@github.com:boteman0206/micro_proto.git
+[submodule "micro_common"]
+	path = micro_common
+	url = git@github.com:boteman0206/micro_common.git
