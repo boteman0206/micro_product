@@ -15,6 +15,7 @@ type DcProduct struct {
 func (p *DcProduct) GetProduct(ctx context.Context, dto *pc.GetProductDto) (*pc.BaseResponse, error) {
 
 	fmt.Println("GetProduct入参：", utils.JsonToString(dto))
+	utils.MyLog.Info("GetProduct入参：", utils.JsonToString(dto))
 
 	var res = &pc.BaseResponse{
 		Code:  200,
@@ -32,6 +33,8 @@ func (p *DcProduct) GetProduct(ctx context.Context, dto *pc.GetProductDto) (*pc.
 	}
 
 	fmt.Println("查询的商品数据： ", utils.JsonToString(data))
+	utils.MyLog.Info("查询商品数据：", utils.JsonToString(data))
 
+	res.Data = utils.JsonToString(data)
 	return res, nil
 }
