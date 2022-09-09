@@ -38,3 +38,28 @@ func (p *DcProduct) GetProduct(ctx context.Context, dto *pc.GetProductDto) (*pc.
 	res.Data = utils.JsonToString(data)
 	return res, nil
 }
+
+func (p *DcProduct) TestProduct(ctx context.Context, dto *pc.GetProductDto) (*pc.BaseResponse, error) {
+
+	fmt.Println("TestProduct：", utils.JsonToString(dto))
+
+	var res = &pc.BaseResponse{
+		Code:  200,
+		Msg:   "",
+		Error: "",
+		Data:  "",
+	}
+
+	conn := services.NewDbConn()
+
+	var data []models.Product
+	err := conn.Select("*").Limit(1).Find(&data)
+	if err != nil {
+		return res, err
+	}
+
+	fmt.Println("TestProduct： ", utils.JsonToString(data))
+
+	res.Data = utils.JsonToString(data)
+	return res, nil
+}
