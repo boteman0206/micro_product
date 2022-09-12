@@ -1,7 +1,7 @@
 package main
 
 import (
-	"micro_product/golangRpc/goRpcAdvance"
+	"micro_product/golangRpc/jaegerLearn"
 	_ "net/http/pprof"
 )
 
@@ -55,6 +55,9 @@ func main() {
 	//goRpcAdvance.RegisterHello14()
 
 	// http和rpc服务共存
-	goRpcAdvance.RegisterHello15()
+	//goRpcAdvance.RegisterHello15()
+
+	// 测试jaeger
+	jaegerLearn.JaeMain01()
 
 }

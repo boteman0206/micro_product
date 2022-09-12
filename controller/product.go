@@ -59,7 +59,7 @@ func (p *DcProduct) TestProduct(ctx context.Context, dto *pc.GetProductDto) (*pc
 		return res, err
 	}
 
-	fmt.Println("TestProduct： ", utils.JsonToString(data))
+	es.MyLog.Info("TestProduct： ", utils.JsonToString(data))
 
 	res.Data = utils.JsonToString(data)
 	return res, nil
