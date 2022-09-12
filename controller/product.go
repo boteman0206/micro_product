@@ -59,7 +59,10 @@ func (p *DcProduct) TestProduct(ctx context.Context, dto *pc.GetProductDto) (*pc
 		return res, err
 	}
 
-	es.MyLog.Info("TestProduct： ", utils.JsonToString(data))
+	es.MyLog.Ctx = ctx
+	str := es.LoadTraceIdStr(ctx)
+	es.MyLog.Debug(str)
+	es.MyLog.Info(" TestProduct： ", utils.JsonToString(data))
 
 	res.Data = utils.JsonToString(data)
 	return res, nil
