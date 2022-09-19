@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"micro_product/config"
 	"micro_product/controller"
@@ -36,6 +37,9 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	pc.RegisterDcProductServer(grpcServer, new(controller.DcProduct))
+
+	// 注册反射服务 这个服务是CLI使用的 跟服务本身没有关系，有些grpc的工具依赖这个
+	reflection.Register(grpcServer)
 
 	port := fmt.Sprintf(":%d", config.ConfigRes.Ser.HttpPort)
 	lis, err := net.Listen("tcp", port)
