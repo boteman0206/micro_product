@@ -57,7 +57,8 @@ func main() {
 	// http和rpc服务共存
 	//goRpcAdvance.RegisterHello15()
 
-	goRpcAdvance.RegisterHello16()
+	//goRpcAdvance.RegisterHello16()
+	goRpcAdvance.RegisterHello17()
 
 	// 测试jaeger
 	//jaegerLearn.JaeMain01()
