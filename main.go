@@ -10,6 +10,7 @@ import (
 	"log"
 	"micro_product/config"
 	"micro_product/controller"
+	"micro_product/micro_common/consulSer"
 	"micro_product/micro_proto/pc"
 	"micro_product/services"
 	"net"
@@ -50,8 +51,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	grpcServer.Serve(lis)
 
+	// 注册到consul服务
+	go consulSer.RegisterServer()
+
+	grpcServer.Serve(lis)
 }
 
 /**
