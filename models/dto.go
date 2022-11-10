@@ -17,6 +17,8 @@ type Config struct {
 type Server struct {
 	HttpPort  int
 	PprofPort int
+	// consul的健康检查的端口
+	HealthPort int
 }
 
 type MysqlInI struct {
