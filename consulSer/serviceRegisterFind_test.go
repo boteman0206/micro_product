@@ -49,3 +49,27 @@ func TestConsul_FindSer(t *testing.T) {
 		})
 	}
 }
+
+// 通过name获取consul服务
+func TestConsul_GetInstancesById(t *testing.T) {
+	type args struct {
+		SerName string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "test1",
+			args: args{
+				SerName: "micro_product",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			GetInstancesById(tt.args.SerName)
+		})
+	}
+}

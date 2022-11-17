@@ -81,3 +81,20 @@ func GetConsulServices(serName string) *consulapi.AgentService {
 
 	return nil
 }
+
+//获取服务
+func GetInstancesById(serviceId string) {
+
+	client, err := consulapi.NewClient(consulapi.DefaultConfig()) //非默认情况下需要设置实际的参数
+	if err != nil {
+		log.Println("NewClient consul err： ", err)
+	}
+	catalogService, _, _ := client.Catalog().Service(serviceId, "", nil)
+
+	for i := range catalogService {
+		service := catalogService[i]
+		fmt.Println(service.ServiceID, service.ServiceName, service.Address, service.ServicePort, " ===========  ", utils.JsonToString(service))
+
+	}
+
+}
