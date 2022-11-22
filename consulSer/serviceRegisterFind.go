@@ -1,12 +1,17 @@
 package consulSer
 
 import (
+	"context"
 	"fmt"
 	consulapi "github.com/hashicorp/consul/api"
+	_ "github.com/mbobakov/grpc-consul-resolver"
 	"github.com/spf13/cast"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	myConfig "micro_product/config"
 	"micro_product/micro_common/utils"
+	"micro_product/micro_proto/pc"
 	"net/http"
 	"strings"
 )
@@ -107,4 +112,37 @@ func GetInstancesById(serviceId string) {
 		fmt.Println(service.Service.Service, service.Service.Address, service.Service.Port, " ===========  ", utils.JsonToString(service), q)
 
 	}
+}
+
+// 测试consul网关调用
+func ConsulTest() {
+
+	dialContext, err := grpc.DialContext(
+		context.Background(),
+		"consul://127.0.0.1:8500/micro_product", // 使用dns需要导入包  _ "github.com/mbobakov/grpc-consul-resolver"
+		grpc.WithBlock(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`), // 设置负载均衡的策略
+		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(1024*1024*100)),
+	)
+	if err != nil {
+		return
+	}
+
+	client := pc.NewDcProductClient(dialContext)
+
+	for i := 0; i < 6; i++ {
+		product, err := client.TestProduct(context.Background(), &pc.GetProductDto{
+			Id:   0,
+			Name: "",
+			Sort: "",
+		})
+		if err != nil {
+			return
+		}
+
+		fmt.Println(utils.JsonToString(product))
+
+	}
+
 }
