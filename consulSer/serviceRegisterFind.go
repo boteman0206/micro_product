@@ -86,15 +86,25 @@ func GetConsulServices(serName string) *consulapi.AgentService {
 func GetInstancesById(serviceId string) {
 
 	client, err := consulapi.NewClient(consulapi.DefaultConfig()) //非默认情况下需要设置实际的参数
+
 	if err != nil {
 		log.Println("NewClient consul err： ", err)
 	}
 	catalogService, _, _ := client.Catalog().Service(serviceId, "", nil)
 
+	// 通过tag获取服务
+	tags, q, err := client.Health().ServiceMultipleTags(serviceId, []string{}, true, nil)
+	if err != nil {
+		return
+	}
 	for i := range catalogService {
 		service := catalogService[i]
 		fmt.Println(service.ServiceID, service.ServiceName, service.Address, service.ServicePort, " ===========  ", utils.JsonToString(service))
 
 	}
+	for i := range tags {
+		service := tags[i]
+		fmt.Println(service.Service.Service, service.Service.Address, service.Service.Port, " ===========  ", utils.JsonToString(service), q)
 
+	}
 }
