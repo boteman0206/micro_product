@@ -115,6 +115,7 @@ func GetInstancesById(serviceId string) {
 }
 
 // 测试consul网关调用
+//https://www.liwenzhou.com/posts/Go/name-resolving-and-load-balancing-in-grpc/#autoid-0-1-0
 func ConsulTest() {
 
 	dialContext, err := grpc.DialContext(
