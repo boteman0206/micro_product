@@ -120,7 +120,7 @@ func ConsulTest() {
 
 	dialContext, err := grpc.DialContext(
 		context.Background(),
-		"consul://127.0.0.1:8500/micro_product", // 使用dns需要导入包  _ "github.com/mbobakov/grpc-consul-resolver"
+		"consul://127.0.0.1:8500/micro_product?tags=micro_product,v1.2", // 使用dns需要导入包  _ "github.com/mbobakov/grpc-consul-resolver"
 		grpc.WithBlock(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`), // 设置负载均衡的策略
@@ -132,7 +132,7 @@ func ConsulTest() {
 
 	client := pc.NewDcProductClient(dialContext)
 
-	for i := 0; i < 6; i++ {
+	for i := 0; i < 3; i++ {
 		product, err := client.TestProduct(context.Background(), &pc.GetProductDto{
 			Id:   0,
 			Name: "",
